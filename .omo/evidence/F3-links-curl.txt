@@ -1,0 +1,8 @@
+=== impressum.html ===
+HTTP/1.0 200 OK
+=== datenschutz.html ===
+HTTP/1.0 200 OK
+=== assets/images/hero_banner.jpg ===
+HTTP/1.0 200 OK
+=== css/style.css ===
+HTTP/1.0 200 OK

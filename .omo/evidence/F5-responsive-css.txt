@@ -1,0 +1,9 @@
+F5 Check 5: Responsive Breakpoints
+Run: grep '@media' css/style.css
+Date: 2026-07-31
+
+RESULTS:
+@media (min-width: 600px) {
+@media (min-width: 1024px) {
+
+VERDICT: PASS — both required breakpoints (600px and 1024px) are present

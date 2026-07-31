@@ -1,0 +1,12 @@
+F5 Check 1: Tel Links
+Run: grep -rn 'href="tel:' index.html impressum.html datenschutz.html
+Date: 2026-07-31
+
+RESULTS:
+index.html:50:    <a href="tel:095054503930" class="phone-link">📞 09505 / 4503930</a>
+index.html:61:    <a href="tel:095054503930" class="floating-btn phone-btn" aria-label="Jetzt anrufen">
+index.html:142:      <p>Tel: <a href="tel:095054503930">09505 4503930</a> | E-Mail: ...
+impressum.html:27:          Telefon: <a href="tel:095054503930">09505 4503930</a>
+datenschutz.html:21:          Telefon: <a href="tel:095054503930">09505 4503930</a>
+
+VERDICT: PASS — all 5 tel hrefs are exactly tel:095054503930

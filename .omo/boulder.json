@@ -8,7 +8,7 @@
       "plan_name": "website-plan",
       "status": "active",
       "started_at": "2026-07-31T07:27:14.353Z",
-      "updated_at": "2026-07-31T07:44:28.867Z",
+      "updated_at": "2026-07-31T07:51:59.816Z",
       "session_ids": [
         "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
       ],
@@ -68,6 +68,17 @@
           "status": "completed",
           "ended_at": "2026-07-31T07:44:28.867Z",
           "elapsed_ms": 97837
+        },
+        "final-wave:f1": {
+          "task_key": "final-wave:f1",
+          "task_label": "F1",
+          "task_title": "**Plan Compliance Audit** — `oracle`",
+          "session_id": "opencode:ses_048d77c92ffenTNnYZ4YCml4ty",
+          "agent": "Sisyphus-Junior",
+          "category": "visual-engineering",
+          "started_at": "2026-07-31T07:47:21.393Z",
+          "status": "running",
+          "updated_at": "2026-07-31T07:51:59.816Z"
         }
       }
     }
@@ -75,7 +86,7 @@
   "active_plan": "/Users/danielkonrad/github/einwich-lottes-website/.omo/plans/website-plan.md",
   "started_at": "2026-07-31T07:27:14.353Z",
   "status": "active",
-  "updated_at": "2026-07-31T07:44:28.867Z",
+  "updated_at": "2026-07-31T07:51:59.816Z",
   "session_ids": [
     "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
   ],
@@ -135,6 +146,17 @@
       "status": "completed",
       "ended_at": "2026-07-31T07:44:28.867Z",
       "elapsed_ms": 97837
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "**Plan Compliance Audit** — `oracle`",
+      "session_id": "opencode:ses_048d77c92ffenTNnYZ4YCml4ty",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "started_at": "2026-07-31T07:47:21.393Z",
+      "status": "running",
+      "updated_at": "2026-07-31T07:51:59.816Z"
     }
   },
   "agent": "atlas"

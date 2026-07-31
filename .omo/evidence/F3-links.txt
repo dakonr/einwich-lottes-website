@@ -1,0 +1,7 @@
+tel:095054503930 | tel:095054503930
+mailto:info@einwich-lottes.de | mailto:info@einwich-lottes.de
+tel:095054503930 | tel:095054503930
+tel:095054503930 | tel:095054503930
+mailto:info@einwich-lottes.de | mailto:info@einwich-lottes.de
+http://localhost:8000/impressum.html | impressum.html
+http://localhost:8000/datenschutz.html | datenschutz.html

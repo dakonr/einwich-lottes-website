@@ -1,0 +1,12 @@
+F5 Check 2: Mailto Links
+Run: grep -rn 'href="mailto:' index.html impressum.html datenschutz.html
+Date: 2026-07-31
+
+RESULTS:
+index.html:54:    <a href="mailto:info@einwich-lottes.de" class="floating-btn mail-btn" aria-label="E-Mail schreiben">
+index.html:142:      ... | E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a>
+impressum.html:28:          E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a>
+datenschutz.html:22:          E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a>
+datenschutz.html:53:        <p>... <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a></p>
+
+VERDICT: PASS — all 5 mailto hrefs are exactly mailto:info@einwich-lottes.de

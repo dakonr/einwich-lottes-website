@@ -1,0 +1,20 @@
+F5 Check 6: Interactive Elements Accessibility (aria-labels)
+Run: grep -n 'aria-label' index.html impressum.html datenschutz.html
+Date: 2026-07-31
+
+RESULTS:
+index.html:54:  <a href="mailto:..." class="floating-btn mail-btn" aria-label="E-Mail schreiben">
+index.html:61:  <a href="tel:..."   class="floating-btn phone-btn" aria-label="Jetzt anrufen">
+index.html:126: <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+index.html:131: <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
+index.html:143: <nav aria-label="Rechtliche Links">
+
+ADDITIONAL CHECKS:
+- No <img> tags found (no alt attribute issues)
+- No <a> tags without href attribute
+- All floating buttons have aria-label
+- Both review star ratings have aria-label="5 von 5 Sternen"
+- Footer nav has aria-label="Rechtliche Links"
+- impressum.html, datenschutz.html: no interactive widgets requiring aria-label
+
+VERDICT: PASS — all interactive elements carry aria-label or visible text

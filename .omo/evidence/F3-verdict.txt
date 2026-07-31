@@ -1,0 +1,38 @@
+VERDICT: APPROVE
+Date: 2026-07-31
+
+=== NETWORK ISOLATION ===
+index.html:      PASS: zero external requests
+impressum.html:  PASS: zero external requests
+datenschutz.html:PASS: zero external requests
+
+=== RESPONSIVE LAYOUT ===
+375px  → display:grid, columns:1 (templateCols: 335px)          ✅ 1-col mobile
+768px  → display:grid, columns:2 (templateCols: 354px 354px)    ✅ 2-col tablet
+1440px → main.container width:960px, maxWidth:960px             ✅ constrained desktop
+
+Screenshots saved:
+  .omo/evidence/F3-responsive-375.png
+  .omo/evidence/F3-responsive-768.png
+  .omo/evidence/F3-responsive-1440.png
+
+=== LINK AUDIT (index.html) ===
+tel:095054503930          ✅ correct tel: schema (×3 instances)
+mailto:info@einwich-lottes.de ✅ correct mailto: schema (×2 instances)
+impressum.html            ✅ internal relative link
+datenschutz.html          ✅ internal relative link
+
+=== CURL HTTP STATUS ===
+impressum.html            → HTTP/1.0 200 OK ✅
+datenschutz.html          → HTTP/1.0 200 OK ✅
+assets/images/hero_banner.jpg → HTTP/1.0 200 OK ✅
+css/style.css             → HTTP/1.0 200 OK ✅
+
+=== SUMMARY ===
+✅ Zero external network requests on all 3 pages
+✅ Responsive layout correct at 375px / 768px / 1440px
+✅ All tel:/mailto: links use correct schemas
+✅ All internal links resolve HTTP 200
+✅ 3 responsive screenshots captured
+
+APPROVE — all F3 criteria met.

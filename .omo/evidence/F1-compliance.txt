@@ -1,0 +1,14 @@
+[FAIL: homepage still has a render-blocking <link rel="stylesheet" href="css/style.css"> in <head>; image size/attributes, eager loading, single CSS file, and zero JS otherwise look aligned]
+[FAIL: external absolute URLs are present, including https://www.einwich-lottes.de/ in the canonical link and https://www.lda.bayern.de in datenschutz.html]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+[PASS]
+
+OVERALL: REJECT (2 items failed)

@@ -1,0 +1,32 @@
+F5 Check 4: W3C HTML Validity (Manual Structural Check)
+vnu not available — manual tag-balance audit performed
+Date: 2026-07-31
+
+=== index.html ===
+DOCTYPE:       <!DOCTYPE html>                          PASS
+html lang:     <html lang="de">                         PASS
+charset:       <meta charset="UTF-8">                   PASS
+title:         Einwich & Lottes GmbH | ...              PASS
+<section>:     6 open / 6 close                         PASS
+<nav>:         1 open / 1 close                         PASS
+<main>:        1 open / 1 close                         PASS
+<header>:      1 open / 1 close                         PASS
+<footer>:      1 open / 1 close                         PASS
+
+=== impressum.html ===
+DOCTYPE:       <!DOCTYPE html>                          PASS
+html lang:     <html lang="de">                         PASS
+charset:       <meta charset="UTF-8">                   PASS
+title:         Impressum | Einwich & Lottes GmbH        PASS
+<section>:     8 open / 8 close                         PASS
+<main>:        1 open / 1 close                         PASS
+
+=== datenschutz.html ===
+DOCTYPE:       <!DOCTYPE html>                          PASS
+html lang:     <html lang="de">                         PASS
+charset:       <meta charset="UTF-8">                   PASS
+title:         Datenschutzerklärung | Einwich & Lottes  PASS
+<section>:     6 open / 6 close                         PASS
+<main>:        1 open / 1 close                         PASS
+
+VERDICT: PASS — all 3 files structurally valid (balanced tags, DOCTYPE, lang, charset, title)

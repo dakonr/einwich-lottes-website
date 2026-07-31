@@ -1,0 +1,15 @@
+{
+  "layout375": {
+    "display": "grid",
+    "columns": 1,
+    "templateCols": "335px"
+  },
+  "layout768": {
+    "display": "grid",
+    "templateCols": "354px 354px"
+  },
+  "layout1440": {
+    "width": 960,
+    "maxWidth": "960px"
+  }
+}
