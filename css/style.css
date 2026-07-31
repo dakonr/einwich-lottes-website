@@ -250,16 +250,8 @@ strong {
 }
 
 /* --------------------------------------------------------------------------
-    8. Cards (primitive) - DEPRECATED: class not used anywhere, kept for backwards compatibility
-    -------------------------------------------------------------------------- */
-.card {
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  box-shadow: var(--shadow-card);
-}
-
+   8. Cards
+   -------------------------------------------------------------------------- */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -368,10 +360,14 @@ strong {
   color: var(--color-dark-900);
 }
 
+.review-card blockquote footer {
+  margin-top: var(--space-3);
+}
+
 .review-card .review-author {
   font-style: normal;
   font-weight: 700;
-  color: var(--color-blue);
+  color: var(--color-red);
   font-size: 0.95rem;
 }
 
@@ -385,30 +381,29 @@ strong {
 /* --------------------------------------------------------------------------
    12. Footer
    -------------------------------------------------------------------------- */
-footer {
+body > footer {
   background: var(--color-dark-900);
   color: var(--color-muted);
-  padding: 30px 20px;
+  padding: 30px 20px 90px;
   text-align: center;
   margin-top: var(--space-12);
 }
 
-footer a {
+body > footer a {
   color: var(--color-muted);
-  text-decoration: none;
-}
-
-footer a:hover,
-footer a:focus-visible {
   text-decoration: underline;
-  color: var(--color-muted);
 }
 
-footer p {
+body > footer a:hover,
+body > footer a:focus-visible {
+  color: #fff;
+}
+
+body > footer p {
   margin: 0 0 var(--space-2);
 }
 
-footer nav {
+body > footer nav {
   display: flex;
   gap: var(--space-4);
   justify-content: center;

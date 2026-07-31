@@ -6,9 +6,9 @@
       "work_id": "website-plan-6170c7e4",
       "active_plan": "/Users/danielkonrad/github/einwich-lottes-website/.omo/plans/website-plan.md",
       "plan_name": "website-plan",
-      "status": "active",
+      "status": "completed",
       "started_at": "2026-07-31T07:27:14.353Z",
-      "updated_at": "2026-07-31T07:51:59.816Z",
+      "updated_at": "2026-07-31T08:05:32.350Z",
       "session_ids": [
         "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
       ],
@@ -80,13 +80,15 @@
           "status": "running",
           "updated_at": "2026-07-31T07:51:59.816Z"
         }
-      }
+      },
+      "ended_at": "2026-07-31T08:05:32.350Z",
+      "elapsed_ms": 2297997
     }
   },
   "active_plan": "/Users/danielkonrad/github/einwich-lottes-website/.omo/plans/website-plan.md",
   "started_at": "2026-07-31T07:27:14.353Z",
-  "status": "active",
-  "updated_at": "2026-07-31T07:51:59.816Z",
+  "status": "completed",
+  "updated_at": "2026-07-31T08:05:32.350Z",
   "session_ids": [
     "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
   ],
@@ -159,5 +161,7 @@
       "updated_at": "2026-07-31T07:51:59.816Z"
     }
   },
-  "agent": "atlas"
+  "agent": "atlas",
+  "ended_at": "2026-07-31T08:05:32.350Z",
+  "elapsed_ms": 2297997
 }
