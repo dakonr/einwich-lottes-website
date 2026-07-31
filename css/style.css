@@ -8,20 +8,30 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Palette */
-  --color-blue:       #2655A4;  /* Primary Blue — sampled from logo faucet; buttons, links, subtitles */
-  --color-red:        #E30613;  /* Accent Red — section borders, highlights */
-  --color-yellow:     #FBC02D;  /* Solar Yellow — stars, solar accents */
-  --color-green:      #16A34A;  /* Phone Green — call action button */
-  --color-dark-900:   #0F172A;  /* Dark Slate — headings, footer bg */
-  --color-dark-800:   #1E293B;  /* Dark Slate Light — phone banner bg */
-  --color-bg:         #F8FAFC;  /* Background Light */
-  --color-card:       #FFFFFF;  /* Card Surface */
-  --color-border:     #E2E8F0;  /* Subtle border for cards */
-  --color-muted:      #94A3B8;  /* Footer text */
+  --color-blue: #2655A4;
+  /* Primary Blue — sampled from logo faucet; buttons, links, subtitles */
+  --color-red: #E30613;
+  /* Accent Red — section borders, highlights */
+  --color-yellow: #FBC02D;
+  /* Solar Yellow — stars, solar accents */
+  --color-green: #16A34A;
+  /* Phone Green — call action button */
+  --color-dark-900: #2a0f0f;
+  /* Dark Slate — headings, footer bg */
+  --color-dark-800: #1E293B;
+  /* Dark Slate Light — phone banner bg */
+  --color-bg: #F8FAFC;
+  /* Background Light */
+  --color-card: #FFFFFF;
+  /* Card Surface */
+  --color-border: #E2E8F0;
+  /* Subtle border for cards */
+  --color-muted: #94A3B8;
+  /* Footer text */
 
   /* Spacing scale (8px base) */
-  --space-1:  4px;
-  --space-2:  8px;
+  --space-1: 4px;
+  --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
@@ -54,13 +64,23 @@ html {
 }
 
 body,
-h1, h2, h3, h4, h5, h6,
-p, ul, ol, figure, blockquote {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure,
+blockquote {
   margin: 0;
   padding: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -93,7 +113,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--color-dark-900);
   line-height: 1.2;
   font-weight: 700;
@@ -220,8 +242,8 @@ strong {
    -------------------------------------------------------------------------- */
 .floating-container {
   position: fixed;
-  right: 16px;
-  bottom: 20px;
+  right: max(16px, calc(env(safe-area-inset-right) + 4px));
+  bottom: max(20px, calc(env(safe-area-inset-bottom) + 10px));
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -394,7 +416,7 @@ strong {
 /* --------------------------------------------------------------------------
    12. Footer
    -------------------------------------------------------------------------- */
-body > footer {
+body>footer {
   background: var(--color-dark-900);
   color: var(--color-muted);
   padding: 30px 20px 90px;
@@ -402,21 +424,21 @@ body > footer {
   margin-top: var(--space-12);
 }
 
-body > footer a {
+body>footer a {
   color: var(--color-muted);
   text-decoration: underline;
 }
 
-body > footer a:hover,
-body > footer a:focus-visible {
+body>footer a:hover,
+body>footer a:focus-visible {
   color: #fff;
 }
 
-body > footer p {
+body>footer p {
   margin: 0 0 var(--space-2);
 }
 
-body > footer nav {
+body>footer nav {
   display: flex;
   gap: var(--space-4);
   justify-content: center;
