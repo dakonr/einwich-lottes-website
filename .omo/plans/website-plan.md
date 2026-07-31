@@ -244,22 +244,22 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
 
 > Precondition: Task 8 (hero optimization) DONE and wired into HTML before any Lighthouse run.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   - Audit deliverables against this plan's Definition of Done + Must/Must-NOT lists. Output PASS/FAIL per item.
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   - Review HTML/CSS for semantics, duplication, dead code, a11y attributes. Save findings to `.omo/evidence/F2-code-review.md`.
 
-- [ ] F3. **Agent-Executed Browser QA + Lighthouse** — `unspecified-high` (uses Playwright)
+- [x] F3. **Agent-Executed Browser QA + Lighthouse** — `unspecified-high` (uses Playwright)
   - Zero external requests: load all 3 pages, capture network log, assert NO request to any non-`localhost` host. Save `.omo/evidence/F3-network-{page}.txt`.
   - Lighthouse (mobile + desktop) on `index.html` → Performance ≥ 98. Save reports to `.omo/evidence/F3-lighthouse-{mobile,desktop}.json`.
   - Responsive matrix — screenshots at 375px, 768px, 1440px; assert 1-col <600px, 2-col 600–1024px, centered ≤960px >1024px. Save to `.omo/evidence/F3-responsive-{w}.png`.
   - Link audit — crawl every `<a href>`; tel/mailto match exact schemas, internal links resolve 200 (no dead links). Save to `.omo/evidence/F3-links.txt`.
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   - Verify no scope creep / no forbidden additions (no CDN, no cookie banner, no JS trackers). Save to `.omo/evidence/F4-scope.md`.
 
-- [ ] F5. **Acceptance Criteria Audit (§7)** — `unspecified-high`
+- [x] F5. **Acceptance Criteria Audit (§7)** — `unspecified-high`
   - W3C validation via local Nu validator (`vnu`/offline) for all 3 pages → 0 errors. Save `.omo/evidence/F5-w3c-{page}.txt`.
   - Click-to-call: every tel link == `tel:095054503930`. Mailto: every == `mailto:info@einwich-lottes.de`.
   - a11y/WCAG AA: every interactive element has label/aria; run axe-core (local) → no serious/critical contrast violations. Save `.omo/evidence/F5-axe.json`.

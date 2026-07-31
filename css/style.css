@@ -221,8 +221,8 @@ strong {
   justify-content: center;
   width: 48px;
   height: 48px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-float);
   color: #fff;
   text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -250,12 +250,12 @@ strong {
 }
 
 /* --------------------------------------------------------------------------
-   8. Cards (primitive)
-   -------------------------------------------------------------------------- */
+    8. Cards (primitive) - DEPRECATED: class not used anywhere, kept for backwards compatibility
+    -------------------------------------------------------------------------- */
 .card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 20px;
   box-shadow: var(--shadow-card);
 }
@@ -272,7 +272,7 @@ strong {
 .service-card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 20px;
   box-shadow: var(--shadow-card);
   display: flex;
@@ -325,7 +325,7 @@ strong {
 .partner-tile {
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 16px 24px;
   font-weight: 700;
   color: var(--color-dark-900);
@@ -353,7 +353,7 @@ strong {
 .review-card {
   background: var(--color-card);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 20px;
   box-shadow: var(--shadow-card);
   display: flex;
@@ -368,7 +368,6 @@ strong {
   color: var(--color-dark-900);
 }
 
-.review-card cite,
 .review-card .review-author {
   font-style: normal;
   font-weight: 700;
