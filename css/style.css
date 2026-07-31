@@ -8,7 +8,7 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Palette */
-  --color-blue:       #0055A5;  /* Primary Blue — buttons, links, subtitles */
+  --color-blue:       #2655A4;  /* Primary Blue — sampled from logo faucet; buttons, links, subtitles */
   --color-red:        #E30613;  /* Accent Red — section borders, highlights */
   --color-yellow:     #FBC02D;  /* Solar Yellow — stars, solar accents */
   --color-green:      #16A34A;  /* Phone Green — call action button */
@@ -189,17 +189,30 @@ strong {
   padding: 16px 20px;
 }
 
+.contact-banner p {
+  font-weight: 700;
+}
+
 .phone-link {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: 10px 24px;
+  background: var(--color-red);
+  border-radius: 9999px;
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
   text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .phone-link:hover,
 .phone-link:focus-visible {
-  text-decoration: underline;
+  text-decoration: none;
   color: #fff;
+  background: #c40511;
+  transform: translateY(-2px);
 }
 
 /* --------------------------------------------------------------------------
