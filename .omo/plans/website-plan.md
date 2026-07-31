@@ -102,7 +102,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
 
 ## TODOs
 
-- [ ] 1. Scaffolding & Setup
+- [x] 1. Scaffolding & Setup
 
   **What to do**:
   - Create directory structure: `css/`, `assets/icons/` (`assets/images/` already exists).
@@ -119,7 +119,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 2: `curl -s http://localhost:8000/index.html` piped to grep — assert ALL present: `<meta charset="UTF-8">`, `name="viewport"` with `width=device-width`, `<title>Einwich & Lottes GmbH`, `name="description"`, `name="keywords"`, `rel="canonical"`, `application/ld+json`. Save to `.omo/evidence/task-1-meta.txt`.
   - Scenario 3: Extract JSON-LD block and assert keys/values: `"@type":"HVACBusiness"`, `"name":"Einwich & Lottes GmbH"`, `"image"` ends `logo.png.avif`, `"telephone":"+49-9505-4503930"`, `"email":"info@einwich-lottes.de"`, `postalCode` `96117`, `"areaServed":"Landkreis Bamberg"`. Save to `.omo/evidence/task-1-jsonld.txt`.
 
-- [ ] 2. Core Stylesheet (Flat Design & Colors)
+- [x] 2. Core Stylesheet (Flat Design & Colors)
 
   **What to do**:
   - Implement `css/style.css` with requested color palette (Primary Blue, Accent Red, etc.).
@@ -134,7 +134,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 2: `grep` the CSS for each palette hex — assert all present: `#0055A5`, `#E30613`, `#FBC02D`, `#16A34A`, `#0F172A`, `#1E293B`, `#F8FAFC`, `#FFFFFF`, and `system-ui` in the font stack. Save to `.omo/evidence/task-2-palette.txt`.
   - Scenario 3: Playwright — `document.querySelector('.container')` computed `max-width` == `960px`. Save to `.omo/evidence/task-2-container.txt`.
 
-- [ ] 3. Hero Header & Contact Banner
+- [x] 3. Hero Header & Contact Banner
 
   **What to do**:
   - Implement Sektion 1 (Hero) and Sektion 2 (Contact Banner).
@@ -150,7 +150,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 2: Playwright — assert `img[src="assets/images/hero_banner_placeholder.png"]` with `alt` == "Einwich & Lottes GmbH - Geschäftsführer und Fuhrpark in Memmelsdorf Landkreis Bamberg". Save to `.omo/evidence/task-3-hero-alt.txt`.
   - Scenario 3: `curl -sI http://localhost:8000/assets/images/hero_banner_placeholder.png` → `200` (no dead image link). Save to `.omo/evidence/task-3-hero-status.txt`.
 
-- [ ] 8. Hero Image Optimization (Performance)
+- [x] 8. Hero Image Optimization (Performance)
 
   **What to do**:
   - `hero_banner_placeholder.png` is 1.9 MB — too heavy for PageSpeed ≥98.
@@ -165,7 +165,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 2: `curl -sI http://localhost:8000/<hero-path>` → `200`. Save to `.omo/evidence/task-8-status.txt`.
   - Scenario 3: Playwright screenshot of hero region at 1440px width, saved to `.omo/evidence/task-8-hero.png`; assert `<img>` `naturalWidth > 0` (renders, not broken).
 
-- [ ] 4. Floating Buttons
+- [x] 4. Floating Buttons
 
   **What to do**:
   - Implement floating mail/phone buttons using fixed positioning.
@@ -179,7 +179,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 2: Playwright — `.floating-btn` container computed style: `position == fixed`, `right == 16px`, `bottom == 20px`, `z-index == 9999`. Save to `.omo/evidence/task-4-position.txt`.
   - Scenario 3: Playwright — both floating anchors have non-empty `aria-label`. Save to `.omo/evidence/task-4-aria.txt`.
 
-- [ ] 5. Content Section + Footer
+- [x] 5. Content Section + Footer
 
   **What to do**:
   - Implement REQUIREMENTS Sections 4.1–4.5 AND Sektion 5 (Footer).
@@ -199,7 +199,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 3: Playwright — assert 5 partner tiles with texts Viessmann/Buderus/Vaillant/Geberit/Grohe. Save to `.omo/evidence/task-5-partners.txt`.
   - Scenario 4: Playwright — footer contains `Lange Straße 34`, `info@einwich-lottes.de`, and BOTH links `impressum.html` + `datenschutz.html`; click each → resolves 200 (not dead). Save to `.omo/evidence/task-5-footer-links.txt`.
 
-- [ ] 6. Impressum Page
+- [x] 6. Impressum Page
 
   **What to do**:
   - `<title>Impressum | Einwich & Lottes GmbH</title>` + backlink `<a href="index.html">← Zurück zur Startseite</a>`.
@@ -220,7 +220,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - Scenario 1: `curl -s http://localhost:8000/impressum.html` — grep-assert ALL present: `Einwich & Lottes GmbH`, `Lange Straße 34`, `96117 Memmelsdorf`, `09505 4503930`, `info@einwich-lottes.de`, `Patrick Einwich`, `Alexander Lottes`, `HRB 11512`, `Amtsgericht Bamberg`, `Handwerkskammer Oberfranken`, `3039281`, `DE366642580`, `Installateur- und Heizungsbauermeister`. Save to `.omo/evidence/task-6-legal-fields.txt`.
   - Scenario 2: Playwright — backlink `href="index.html"` exists and click resolves 200. Save to `.omo/evidence/task-6-backlink.txt`.
 
-- [ ] 7. Datenschutz Page
+- [x] 7. Datenschutz Page
 
   **What to do**:
   - `<title>Datenschutzerklärung | Einwich & Lottes GmbH</title>` + backlink to `index.html`.
@@ -235,7 +235,7 @@ Wave FINAL (After ALL tasks - Task 8 MUST be done before any Lighthouse run):
   - **Category**: `writing`
 
   **QA Scenarios**:
-  - Scenario 1: `curl -s http://localhost:8000/datenschutz.html` — grep-assert ALL present: `Verantwortliche`, `keine Cookies`/`Keine Cookies`, `Tracking`, `Art. 6 Abs. 1 lit. b`, `Server-Log`, `Auskunft`. Save to `.omo/evidence/task-7-content.txt`.
+  - Scenario 1: `curl -s http://localhost:8000/datenschutz.html` — grep-assert ALL present: `Verantwortliche`, `rein informatorische`/`informatorischen Nutzung`, `keine Server-Log`/`Server-Log-Files`, `kein Web-Analytics`/`keine Web-Analyse`, `Art. 6 Abs. 1 lit. b`, `keine Cookies`/`Keine Cookies`, `keine Tracking`, `keine externen CDN`/`Google Fonts`, `Auskunft`, `Berichtigung`, `Löschung`. Save to `.omo/evidence/task-7-content.txt`.
   - Scenario 2: Playwright — backlink `href="index.html"` exists and click resolves 200. Save to `.omo/evidence/task-7-backlink.txt`.
 
 ---

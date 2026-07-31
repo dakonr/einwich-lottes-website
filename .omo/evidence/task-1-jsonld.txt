@@ -1,0 +1,32 @@
+{
+    "@context": "https://schema.org",
+    "@type": "HVACBusiness",
+    "name": "Einwich & Lottes GmbH",
+    "image": "https://www.einwich-lottes.de/assets/images/logo.png.avif",
+    "telephone": "+49-9505-4503930",
+    "email": "info@einwich-lottes.de",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Lange Straße 34",
+      "addressLocality": "Memmelsdorf",
+      "addressRegion": "Bavaria",
+      "postalCode": "96117",
+      "addressCountry": "DE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 49.932,
+      "longitude": 10.998
+    },
+    "areaServed": "Landkreis Bamberg",
+    "priceRange": "$$"
+  }
+
+HITS:
+HVACBusiness
+Einwich & Lottes GmbH
+logo.png.avif
++49-9505-4503930
+info@einwich-lottes.de
+96117
+Landkreis Bamberg

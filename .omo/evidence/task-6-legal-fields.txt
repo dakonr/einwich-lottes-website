@@ -1,0 +1,13 @@
+  <title>Impressum | Einwich &amp; Lottes GmbH</title>
+          <strong>Einwich &amp; Lottes GmbH</strong><br>
+          Lange Straße 34<br>
+          96117 Memmelsdorf (OT Kremmeldorf)
+          Telefon: <a href="tel:095054503930">09505 4503930</a><br>
+          E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a>
+        <p>Patrick Einwich, Alexander Lottes</p>
+          Registergericht: Amtsgericht Bamberg<br>
+          HRB-Nummer: HRB 11512
+          Handwerkskammer Oberfranken<br>
+          Betriebsnummer: 3039281
+        <p>Installateur- und Heizungsbauermeister (verliehen in Deutschland)</p>
+        <p>USt-IdNr.: DE366642580</p>

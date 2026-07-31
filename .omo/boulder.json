@@ -1,0 +1,141 @@
+{
+  "schema_version": 2,
+  "active_work_id": "website-plan-6170c7e4",
+  "works": {
+    "website-plan-6170c7e4": {
+      "work_id": "website-plan-6170c7e4",
+      "active_plan": "/Users/danielkonrad/github/einwich-lottes-website/.omo/plans/website-plan.md",
+      "plan_name": "website-plan",
+      "status": "active",
+      "started_at": "2026-07-31T07:27:14.353Z",
+      "updated_at": "2026-07-31T07:44:28.867Z",
+      "session_ids": [
+        "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
+      ],
+      "session_origins": {
+        "opencode:ses_048f5537bffeYIdqHZQLANJvtN": "direct"
+      },
+      "agent": "atlas",
+      "task_sessions": {
+        "todo:1": {
+          "task_key": "todo:1",
+          "task_label": "1",
+          "task_title": "Scaffolding & Setup",
+          "session_id": "opencode:ses_048ec0fd3ffel11qR5Y26d9Fg9",
+          "agent": "Sisyphus-Junior",
+          "category": "quick",
+          "updated_at": "2026-07-31T07:31:26.191Z",
+          "started_at": "2026-07-31T07:31:01.871Z",
+          "status": "completed",
+          "ended_at": "2026-07-31T07:31:26.191Z",
+          "elapsed_ms": 24320
+        },
+        "todo:2": {
+          "task_key": "todo:2",
+          "task_label": "2",
+          "task_title": "Core Stylesheet (Flat Design & Colors)",
+          "session_id": "opencode:ses_048e91d95ffeS5TQQlsHHHewcU",
+          "agent": "Sisyphus-Junior",
+          "category": "visual-engineering",
+          "updated_at": "2026-07-31T07:36:01.470Z",
+          "started_at": "2026-07-31T07:35:39.232Z",
+          "status": "completed",
+          "ended_at": "2026-07-31T07:36:01.470Z",
+          "elapsed_ms": 22238
+        },
+        "todo:8": {
+          "task_key": "todo:8",
+          "task_label": "8",
+          "task_title": "Hero Image Optimization (Performance)",
+          "session_id": "opencode:ses_048e52554ffehS0XQpfh3QQBU9",
+          "agent": "Sisyphus-Junior",
+          "category": "visual-engineering",
+          "updated_at": "2026-07-31T07:39:32.724Z",
+          "started_at": "2026-07-31T07:38:08.960Z",
+          "status": "completed",
+          "ended_at": "2026-07-31T07:39:32.724Z",
+          "elapsed_ms": 83764
+        },
+        "todo:5": {
+          "task_key": "todo:5",
+          "task_label": "5",
+          "task_title": "Content Section + Footer",
+          "session_id": "opencode:ses_048e1eec6ffed4Y14Utu7fCnEY",
+          "agent": "Sisyphus-Junior",
+          "category": "unspecified-high",
+          "updated_at": "2026-07-31T07:44:28.867Z",
+          "started_at": "2026-07-31T07:42:51.030Z",
+          "status": "completed",
+          "ended_at": "2026-07-31T07:44:28.867Z",
+          "elapsed_ms": 97837
+        }
+      }
+    }
+  },
+  "active_plan": "/Users/danielkonrad/github/einwich-lottes-website/.omo/plans/website-plan.md",
+  "started_at": "2026-07-31T07:27:14.353Z",
+  "status": "active",
+  "updated_at": "2026-07-31T07:44:28.867Z",
+  "session_ids": [
+    "opencode:ses_048f5537bffeYIdqHZQLANJvtN"
+  ],
+  "session_origins": {
+    "opencode:ses_048f5537bffeYIdqHZQLANJvtN": "direct"
+  },
+  "plan_name": "website-plan",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Scaffolding & Setup",
+      "session_id": "opencode:ses_048ec0fd3ffel11qR5Y26d9Fg9",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-07-31T07:31:26.191Z",
+      "started_at": "2026-07-31T07:31:01.871Z",
+      "status": "completed",
+      "ended_at": "2026-07-31T07:31:26.191Z",
+      "elapsed_ms": 24320
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Core Stylesheet (Flat Design & Colors)",
+      "session_id": "opencode:ses_048e91d95ffeS5TQQlsHHHewcU",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-07-31T07:36:01.470Z",
+      "started_at": "2026-07-31T07:35:39.232Z",
+      "status": "completed",
+      "ended_at": "2026-07-31T07:36:01.470Z",
+      "elapsed_ms": 22238
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "Hero Image Optimization (Performance)",
+      "session_id": "opencode:ses_048e52554ffehS0XQpfh3QQBU9",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-07-31T07:39:32.724Z",
+      "started_at": "2026-07-31T07:38:08.960Z",
+      "status": "completed",
+      "ended_at": "2026-07-31T07:39:32.724Z",
+      "elapsed_ms": 83764
+    },
+    "todo:5": {
+      "task_key": "todo:5",
+      "task_label": "5",
+      "task_title": "Content Section + Footer",
+      "session_id": "opencode:ses_048e1eec6ffed4Y14Utu7fCnEY",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-07-31T07:44:28.867Z",
+      "started_at": "2026-07-31T07:42:51.030Z",
+      "status": "completed",
+      "ended_at": "2026-07-31T07:44:28.867Z",
+      "elapsed_ms": 97837
+    }
+  },
+  "agent": "atlas"
+}

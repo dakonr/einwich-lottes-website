@@ -1,0 +1,3 @@
+PASS: img.alt equals expected string (Playwright/Chromium DOM assertion)
+Expected: Einwich & Lottes GmbH - Geschäftsführer und Fuhrpark in Memmelsdorf Landkreis Bamberg
+Actual:   Einwich & Lottes GmbH - Geschäftsführer und Fuhrpark in Memmelsdorf Landkreis Bamberg

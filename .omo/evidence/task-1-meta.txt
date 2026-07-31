@@ -1,0 +1,7 @@
+charset="UTF-8"
+width=device-width
+Einwich
+name="description"
+name="keywords"
+canonical
+application/ld+json

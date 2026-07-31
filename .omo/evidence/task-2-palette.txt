@@ -1,0 +1,18 @@
+=== #0055A5 ===
+11:  --color-blue:       #0055A5;  /* Primary Blue — buttons, links, subtitles */
+=== #E30613 ===
+12:  --color-red:        #E30613;  /* Accent Red — section borders, highlights */
+=== #FBC02D ===
+13:  --color-yellow:     #FBC02D;  /* Solar Yellow — stars, solar accents */
+=== #16A34A ===
+14:  --color-green:      #16A34A;  /* Phone Green — call action button */
+=== #0F172A ===
+15:  --color-dark-900:   #0F172A;  /* Dark Slate — headings, footer bg */
+=== #1E293B ===
+16:  --color-dark-800:   #1E293B;  /* Dark Slate Light — phone banner bg */
+=== #F8FAFC ===
+17:  --color-bg:         #F8FAFC;  /* Background Light */
+=== #FFFFFF ===
+18:  --color-card:       #FFFFFF;  /* Card Surface */
+=== system-ui ===
+85:  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;

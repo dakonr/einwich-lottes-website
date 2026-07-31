@@ -1,0 +1,451 @@
+/* ==========================================================================
+   Einwich & Lottes GmbH — Flat Design System
+   Single stylesheet, zero external dependencies.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens (Palette + Scale)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Palette */
+  --color-blue:       #0055A5;  /* Primary Blue — buttons, links, subtitles */
+  --color-red:        #E30613;  /* Accent Red — section borders, highlights */
+  --color-yellow:     #FBC02D;  /* Solar Yellow — stars, solar accents */
+  --color-green:      #16A34A;  /* Phone Green — call action button */
+  --color-dark-900:   #0F172A;  /* Dark Slate — headings, footer bg */
+  --color-dark-800:   #1E293B;  /* Dark Slate Light — phone banner bg */
+  --color-bg:         #F8FAFC;  /* Background Light */
+  --color-card:       #FFFFFF;  /* Card Surface */
+  --color-border:     #E2E8F0;  /* Subtle border for cards */
+  --color-muted:      #94A3B8;  /* Footer text */
+
+  /* Spacing scale (8px base) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, figure, blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base Typography
+   -------------------------------------------------------------------------- */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-dark-900);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  color: var(--color-dark-900);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: var(--space-4);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-2);
+  border-bottom: 3px solid var(--color-red);
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-3);
+}
+
+p {
+  margin-bottom: var(--space-4);
+}
+
+a {
+  color: var(--color-blue);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+strong {
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout Utilities
+   -------------------------------------------------------------------------- */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: var(--space-10) 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Section
+   -------------------------------------------------------------------------- */
+.hero-section {
+  background: var(--color-card);
+}
+
+.hero-section img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   6. Contact Banner (phone strip)
+   -------------------------------------------------------------------------- */
+.contact-banner {
+  background: var(--color-dark-800);
+  color: #fff;
+  text-align: center;
+  padding: 16px 20px;
+}
+
+.phone-link {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+}
+
+.phone-link:hover,
+.phone-link:focus-visible {
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   7. Floating Action Buttons (fixed to viewport)
+   -------------------------------------------------------------------------- */
+.floating-container {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.floating-btn:hover,
+.floating-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+}
+
+.floating-btn svg,
+.floating-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.mail-btn {
+  background: var(--color-blue);
+}
+
+.phone-btn {
+  background: var(--color-green);
+}
+
+/* --------------------------------------------------------------------------
+   8. Cards (primitive)
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Services
+   -------------------------------------------------------------------------- */
+.service-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.service-card h3 {
+  color: var(--color-blue);
+  margin: 0;
+}
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-list li {
+  position: relative;
+  padding-left: 24px;
+  line-height: 1.5;
+}
+
+.service-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 14px;
+  height: 8px;
+  border-left: 3px solid var(--color-green);
+  border-bottom: 3px solid var(--color-green);
+  transform: rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   10. Partners
+   -------------------------------------------------------------------------- */
+.partner-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.partner-tile {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px 24px;
+  font-weight: 700;
+  color: var(--color-dark-900);
+  min-width: 140px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.partner-tile:hover {
+  border-color: var(--color-blue);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   11. Reviews
+   -------------------------------------------------------------------------- */
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.review-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.review-card blockquote,
+.review-card p {
+  margin: 0;
+  font-style: italic;
+  color: var(--color-dark-900);
+}
+
+.review-card cite,
+.review-card .review-author {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--color-blue);
+  font-size: 0.95rem;
+}
+
+.stars {
+  color: var(--color-yellow);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   12. Footer
+   -------------------------------------------------------------------------- */
+footer {
+  background: var(--color-dark-900);
+  color: var(--color-muted);
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: var(--space-12);
+}
+
+footer a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+footer a:hover,
+footer a:focus-visible {
+  text-decoration: underline;
+  color: var(--color-muted);
+}
+
+footer p {
+  margin: 0 0 var(--space-2);
+}
+
+footer nav {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive breakpoints (mobile-first)
+   -------------------------------------------------------------------------- */
+
+/* 600px+ : two-column grids */
+@media (min-width: 600px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section {
+    padding: var(--space-12) 0;
+  }
+}
+
+/* 1024px+ : four-column grids, expanded max-width */
+@media (min-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .phone-link {
+    font-size: 1.75rem;
+  }
+}

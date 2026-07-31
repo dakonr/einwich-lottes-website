@@ -1,0 +1,12 @@
+=== Task 7 Content QA ===
+PASS: Verantwortliche
+PASS: rein informatorischen Nutzung
+PASS: keine Server-Log
+PASS: kein Web-Analytics
+PASS: Art. 6 Abs. 1 lit. b
+PASS: keine Cookies
+PASS: keine Tracking
+PASS: keine externen CDN
+PASS: Auskunft
+PASS: Berichtigung
+PASS: Löschung
