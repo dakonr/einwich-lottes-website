@@ -31,7 +31,7 @@
         Lange Straße 34<br>
         96117 Memmelsdorf (OT Kremmeldorf)<br>
         Telefon: <a href="tel:095054503930">09505 4503930</a><br>
-        E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a>
+        E-Mail: <a href="#" data-c="105,110,102,111,64,101,105,110,119,105,99,104,45,108,111,116,116,101,115,46,100,101">E-Mail</a>
       </p>
     </section>
 
@@ -71,7 +71,7 @@
         <li>Widerspruchsrecht (Art. 21 DSGVO)</li>
       </ul>
       <p>Zur Ausübung Ihrer Rechte wenden Sie sich bitte an: <a
-          href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a></p>
+          href="#" data-c="105,110,102,111,64,101,105,110,119,105,99,104,45,108,111,116,116,101,115,46,100,101">E-Mail</a></p>
       <p>Sie haben zudem das Recht, sich bei der zuständigen Aufsichtsbehörde (Bayerisches Landesamt für
         Datenschutzaufsicht, <a href="https://www.lda.bayern.de" rel="noopener noreferrer">www.lda.bayern.de</a>) zu
         beschweren.</p>
@@ -92,6 +92,19 @@
       </nav>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('[data-c]').forEach(function(el) {
+      var codes = el.getAttribute('data-c');
+      var addr = codes.split(',').map(function(c) { return String.fromCharCode(c); }).join('');
+      function decode() {
+        el.href = 'mailto:' + addr;
+        if (!el.querySelector('svg')) el.textContent = addr;
+      }
+      el.addEventListener('focus', decode);
+      el.addEventListener('mouseenter', decode);
+      el.addEventListener('touchstart', decode);
+    });
+  </script>
 </body>
 
 </html>

@@ -80,7 +80,7 @@
   </div>
   <nav class="floating-container" aria-label="Direktkontakt">
     <!-- Button 1: E-Mail (top) -->
-    <a href="mailto:info@einwich-lottes.de" class="floating-btn mail-btn" aria-label="E-Mail schreiben">
+    <a href="#" class="floating-btn mail-btn" data-c="105,110,102,111,64,101,105,110,119,105,99,104,45,108,111,116,116,101,115,46,100,101" aria-label="E-Mail schreiben">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="24" height="24">
         <rect x="2" y="4" width="20" height="16" rx="2"/>
         <polyline points="2,4 12,13 22,4"/>
@@ -167,12 +167,25 @@
   <footer>
     <div class="container">
       <p>Einwich &amp; Lottes GmbH | Lange Straße 34 | 96117 Memmelsdorf (OT Kremmeldorf)</p>
-      <p>Tel: <a href="tel:095054503930">09505 4503930</a> | E-Mail: <a href="mailto:info@einwich-lottes.de">info@einwich-lottes.de</a></p>
+      <p>Tel: <a href="tel:095054503930">09505 4503930</a> | E-Mail: <a href="#" data-c="105,110,102,111,64,101,105,110,119,105,99,104,45,108,111,116,116,101,115,46,100,101">E-Mail</a></p>
       <nav aria-label="Rechtliche Links">
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html">Datenschutzerklärung</a>
       </nav>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('[data-c]').forEach(function(el) {
+      var codes = el.getAttribute('data-c');
+      var addr = codes.split(',').map(function(c) { return String.fromCharCode(c); }).join('');
+      function decode() {
+        el.href = 'mailto:' + addr;
+        if (!el.querySelector('svg')) el.textContent = addr;
+      }
+      el.addEventListener('focus', decode);
+      el.addEventListener('mouseenter', decode);
+      el.addEventListener('touchstart', decode);
+    });
+  </script>
 </body>
 </html>
