@@ -5,7 +5,7 @@
 **Branch:** main
 
 ## OVERVIEW
-Static one-page "web business card" (Web-Visitenkarte) for Einwich & Lottes GmbH, a German HVAC/plumbing trade business (Heizung/Sanitär/Solar/Wartung) near Bamberg. Pure hand-written HTML5 + one CSS file. No build step, no JS, no framework, no dependencies.
+Static one-page "web business card" (Web-Visitenkarte) for Einwich & Lottes GmbH, a German HVAC/plumbing trade business (Heizung/Sanitär/Solar/Wartung) near Bamberg. Pure hand-written HTML5 + one CSS file. No build step, no framework, no dependencies.
 
 ## STRUCTURE
 ```
@@ -19,14 +19,14 @@ REQUIREMENTS.md    # Full German spec — source of truth for content + constrai
 ```
 
 ## WHERE TO LOOK
-| Task | Location | Notes |
-|------|----------|-------|
-| Change content/copy | `index.html` sections `#ueber-uns`, `#leistungen`, `#angebot`, `#partner`, `#bewertungen` | Content is hardcoded German prose |
-| Styling / colors | `css/style.css` `:root` tokens | All colors/spacing/radii are CSS vars |
-| Contact info (phone/email/address) | Repeated in all 3 HTML files + footer + JSON-LD | Update ALL occurrences together |
-| SEO / structured data | `index.html` `<head>` (meta, OG, Twitter, JSON-LD `HVACBusiness`) | |
-| Legal facts (HRB, USt-IdNr, Geschäftsführer) | `impressum.html` | Real registered data — not placeholders |
-| Original requirements | `REQUIREMENTS.md` | Authoritative spec |
+| Task                                         | Location                                                                                  | Notes                                   |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------- |
+| Change content/copy                          | `index.html` sections `#ueber-uns`, `#leistungen`, `#angebot`, `#partner`, `#bewertungen` | Content is hardcoded German prose       |
+| Styling / colors                             | `css/style.css` `:root` tokens                                                            | All colors/spacing/radii are CSS vars   |
+| Contact info (phone/email/address)           | Repeated in all 3 HTML files + footer + JSON-LD                                           | Update ALL occurrences together         |
+| SEO / structured data                        | `index.html` `<head>` (meta, OG, Twitter, JSON-LD `HVACBusiness`)                         |                                         |
+| Legal facts (HRB, USt-IdNr, Geschäftsführer) | `impressum.html`                                                                          | Real registered data — not placeholders |
+| Original requirements                        | `REQUIREMENTS.md`                                                                         | Authoritative spec                      |
 
 ## CONVENTIONS
 - Language: all user-facing content and comments are German; `<html lang="de">`.
