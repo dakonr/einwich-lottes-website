@@ -378,13 +378,41 @@ strong {
 /* --------------------------------------------------------------------------
    11. Reviews
    -------------------------------------------------------------------------- */
-.review-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+.review-carousel {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.review-carousel-viewport {
+  order: 1;
+  display: flex;
+  flex: 1 1 100%;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-radius: var(--radius-md);
+}
+
+.review-carousel-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.review-carousel-viewport:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
 }
 
 .review-card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  min-width: 0;
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -411,6 +439,37 @@ strong {
   font-weight: 700;
   color: var(--color-red);
   font-size: 0.95rem;
+}
+
+.review-carousel-btn {
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-card);
+  color: var(--color-blue);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.review-carousel-btn:hover {
+  border-color: var(--color-blue);
+}
+
+.review-carousel-btn:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.review-carousel-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
 
 .stars {
@@ -504,6 +563,10 @@ body>footer nav {
   .section {
     padding: var(--space-12) 0;
   }
+
+  .review-card {
+    flex-basis: calc((100% - var(--space-5)) / 2);
+  }
 }
 
 /* 1024px+ : four-column grids, expanded max-width */
@@ -514,5 +577,21 @@ body>footer nav {
 
   .phone-link {
     font-size: 1.75rem;
+  }
+
+  /* Reviews: side-by-side controls, 3 cards per view */
+  .review-carousel {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .review-carousel-viewport,
+  .review-carousel-btn {
+    order: 0;
+  }
+
+  .review-card {
+    flex-basis: calc((100% - var(--space-5)) / 2);
   }
 }
