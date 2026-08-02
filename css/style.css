@@ -283,6 +283,10 @@ strong {
   background: var(--color-blue);
 }
 
+.instagram-btn {
+  background: var(--color-red);
+}
+
 .phone-btn {
   background: var(--color-green);
 }
