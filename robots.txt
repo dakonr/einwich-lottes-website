@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Interne Arbeitsdateien nicht indizieren
+Disallow: /.omo
+Disallow: /*.md$
+
 Sitemap: https://www.einwich-lottes.de/sitemap.xml
