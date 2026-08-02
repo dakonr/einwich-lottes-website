@@ -216,6 +216,7 @@ strong {
 
 .contact-banner p {
   font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .phone-link {
@@ -576,6 +577,10 @@ body>footer nav {
   }
 
   .phone-link {
+    font-size: 1.75rem;
+  }
+
+  .contact-banner p {
     font-size: 1.75rem;
   }
 
