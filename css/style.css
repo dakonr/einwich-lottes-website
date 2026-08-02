@@ -20,6 +20,8 @@
   /* Dark Slate — headings, footer bg */
   --color-dark-800: #1E293B;
   /* Dark Slate Light — phone banner bg */
+  --color-contact: #3356A1;
+  /* Contact/Header Blue — RGB(51, 86, 161) */
   --color-bg: #F8FAFC;
   /* Background Light */
   --color-card: #FFFFFF;
@@ -205,7 +207,7 @@ strong {
    6. Contact Banner (phone strip)
    -------------------------------------------------------------------------- */
 .contact-banner {
-  background: var(--color-dark-800);
+  background: var(--color-contact);
   color: #fff;
   text-align: center;
   padding: 16px 20px;
@@ -417,7 +419,7 @@ strong {
    12. Footer
    -------------------------------------------------------------------------- */
 body>footer {
-  background: var(--color-dark-900);
+  background: var(--color-contact);
   color: var(--color-muted);
   padding: 30px 20px 90px;
   text-align: center;
