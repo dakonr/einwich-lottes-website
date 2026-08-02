@@ -1,7 +1,7 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-07-31
-**Commit:** d697ac6
+**Generated:** 2026-08-02
+**Commit:** 62421db
 **Branch:** main
 
 ## OVERVIEW
@@ -13,8 +13,11 @@ index.html         # One-pager: hero, phone banner, floating contact, 5 content 
 impressum.html     # Legal notice (§5 DDG) — noindex
 datenschutz.html   # GDPR privacy policy — noindex
 css/style.css      # Single stylesheet, design tokens in :root, mobile-first
-assets/images/     # logo + hero_banner in .avif/.webp/.jpg(.png) — pre-optimized variants
+assets/images/     # hero_banner (.avif/.webp/.jpg) + logo (.avif/.png) — pre-optimized variants
 assets/icons/      # empty (.gitkeep); icons are inlined SVG in HTML instead
+manifest.json      # PWA manifest (name, theme_color #2655A4, logo.png icon)
+robots.txt         # Allow all + sitemap reference
+sitemap.xml        # 3 URLs: /, impressum.html, datenschutz.html
 REQUIREMENTS.md    # Full German spec — source of truth for content + constraints
 ```
 
@@ -24,7 +27,10 @@ REQUIREMENTS.md    # Full German spec — source of truth for content + constrai
 | Change content/copy                          | `index.html` sections `#ueber-uns`, `#leistungen`, `#angebot`, `#partner`, `#bewertungen` | Content is hardcoded German prose       |
 | Styling / colors                             | `css/style.css` `:root` tokens                                                            | All colors/spacing/radii are CSS vars   |
 | Contact info (phone/email/address)           | Repeated in all 3 HTML files + footer + JSON-LD                                           | Update ALL occurrences together         |
+| Social links (Instagram, tel:)               | `index.html` floating buttons (`.floating-btn`), footer                                   | Instagram `einwichlottes_gmbh` opens in new tab |
+| Google Business-Profil-Link                  | `index.html` `#bewertungen` review-summary-count                                         | `share.google` short link + `title` tooltip |
 | SEO / structured data                        | `index.html` `<head>` (meta, OG, Twitter, JSON-LD `HVACBusiness`)                         |                                         |
+| PWA / robots / sitemap                       | `manifest.json`, `robots.txt`, `sitemap.xml`                                              | Domain `www.einwich-lottes.de` in sitemap |
 | Legal facts (HRB, USt-IdNr, Geschäftsführer) | `impressum.html`                                                                          | Real registered data — not placeholders |
 | Original requirements                        | `REQUIREMENTS.md`                                                                         | Authoritative spec                      |
 
@@ -33,8 +39,9 @@ REQUIREMENTS.md    # Full German spec — source of truth for content + constrai
 - CSS: single file, numbered section banners (`/* 1. Design Tokens */`), design tokens only in `:root`. Add new tokens rather than hardcoding hex/spacing.
 - Mobile-first: base styles = mobile; breakpoints at `min-width: 600px` and `1024px` only.
 - Icons: inline SVG directly in HTML (`assets/icons/` is intentionally empty).
-- Images: ship `.avif` + `.webp` + fallback via `<picture>`/`<source>`; keep all three variants in sync.
+- Images: ship `.avif` + `.webp` + fallback via `<picture>`/`<source>`; keep all three variants in sync. Note: `logo` currently only has `.avif` + `.png`.
 - Content max-width: 960px (`.container`).
+- External links open in a new tab with `rel="noopener noreferrer"` (e.g. Instagram button).
 
 ## ANTI-PATTERNS (THIS PROJECT — HARD CONSTRAINTS)
 - **NO external requests (GDPR/DSGVO):** never add Google Fonts, CDNs, FontAwesome, Google Maps, Analytics, jQuery, or any third-party script/stylesheet. Zero external network calls is a legal requirement.
@@ -47,3 +54,4 @@ REQUIREMENTS.md    # Full German spec — source of truth for content + constrai
 - Performance target: Lighthouse 98–100 mobile & desktop. Keep it dependency-free and lean.
 - No test/build/dev commands. Preview by opening `index.html` in a browser (or any static server, e.g. `python3 -m http.server`).
 - Acceptance checklist lives in `REQUIREMENTS.md` §7 (W3C validity, zero external requests, click-to-call `tel:095054503930`, mailto, WCAG AA contrast).
+- `.omo/` is internal agent tooling (plans, evidence, notepads) — not part of the deployed site; do not edit.
