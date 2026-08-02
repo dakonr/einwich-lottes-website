@@ -283,6 +283,10 @@ strong {
   background: var(--color-blue);
 }
 
+.instagram-btn {
+  background: var(--color-red);
+}
+
 .phone-btn {
   background: var(--color-green);
 }
@@ -414,6 +418,37 @@ strong {
   font-size: 1.1rem;
   letter-spacing: 2px;
   line-height: 1;
+}
+
+/* Review summary (overall rating) */
+.review-summary {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.review-summary-stars {
+  color: var(--color-yellow);
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.review-summary-score {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-dark-900);
+}
+
+.review-summary-count {
+  font-size: 0.95rem;
+  color: var(--color-muted);
 }
 
 /* --------------------------------------------------------------------------
