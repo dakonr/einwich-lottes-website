@@ -1,0 +1,32 @@
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local build/runtime artifacts (safe defaults)
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+
+# Open Code and oh-my-openagent ignores
+.playright-mcp
