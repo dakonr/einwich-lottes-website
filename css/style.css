@@ -210,8 +210,25 @@ strong {
 .contact-banner {
   background: var(--color-contact);
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 12px 20px;
+}
+
+.contact-banner-logo {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.contact-banner-logo img {
+  height: 32px;
+  width: auto;
+}
+
+.contact-banner-content {
+  flex: 1;
   text-align: center;
-  padding: 16px 20px;
 }
 
 .contact-banner p {
@@ -487,6 +504,28 @@ body>footer nav {
    13. Responsive breakpoints (mobile-first)
    -------------------------------------------------------------------------- */
 
+/* Very narrow screens: keep phone pill on one line next to the logo */
+@media (max-width: 420px) {
+  .phone-link {
+    font-size: 1.15rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-banner {
+    gap: var(--space-3);
+  }
+
+  .contact-banner-logo img {
+    height: 24px;
+  }
+
+  .phone-link {
+    font-size: 0.95rem;
+  }
+}
+
 /* 600px+ : two-column grids */
 @media (min-width: 600px) {
   h1 {
@@ -504,6 +543,10 @@ body>footer nav {
   .section {
     padding: var(--space-12) 0;
   }
+
+  .contact-banner-logo img {
+    height: 44px;
+  }
 }
 
 /* 1024px+ : four-column grids, expanded max-width */
@@ -514,5 +557,9 @@ body>footer nav {
 
   .phone-link {
     font-size: 1.75rem;
+  }
+
+  .contact-banner-logo img {
+    height: 48px;
   }
 }
