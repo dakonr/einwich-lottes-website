@@ -138,6 +138,7 @@ h2 {
 h3 {
   font-size: 1.15rem;
   margin-bottom: var(--space-3);
+  color: var(--color-contact);
 }
 
 p {
