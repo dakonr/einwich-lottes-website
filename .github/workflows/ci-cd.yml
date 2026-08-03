@@ -43,9 +43,10 @@ jobs:
         id: a11y
         run: |
           npx playwright test tests/accessibility.spec.js
-          echo "results<<EOF" >> $GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "results<<$EOF" >> $GITHUB_OUTPUT
           cat a11y-results.json >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Upload accessibility report
         if: always()
@@ -66,9 +67,10 @@ jobs:
 
       - name: Extract Lighthouse results
         run: |
-          echo "results<<EOF" >> $GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "results<<$EOF" >> $GITHUB_OUTPUT
           ls -la .lighthouseci/ >> $GITHUB_OUTPUT 2>&1 || true
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Comment Lighthouse results on PR
         if: github.event_name == 'pull_request'
