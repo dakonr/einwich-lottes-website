@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run-tests.sh - Local test runner for performance & accessibility
-# Usage: ./run-tests.sh [a11y|lighthouse|all]
+# Usage: ./run-tests.sh [a11y|lighthouse|screenshots|deploy|all]
 
 set -euo pipefail
 
@@ -53,6 +53,45 @@ run_lighthouse() {
   echo "✅ Performance audit passed"
 }
 
+run_screenshots() {
+  echo ""
+  echo "📸 Taking screenshots (Mobile + Desktop)..."
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  BASE_URL=http://localhost:$PORT npx playwright test tests/screenshots.spec.js --reporter=line
+  echo "✅ Screenshots saved to screenshots/"
+}
+
+run_deploy() {
+  echo ""
+  echo "📦 Creating deployment ZIP..."
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  rm -rf deploy
+  mkdir -p deploy
+  rsync -av \
+    --exclude='.DS_Store' \
+    --exclude='.playwright-mcp' \
+    --exclude='icons/.gitkeep' \
+    --exclude='.git' \
+    --exclude='.github' \
+    --exclude='.omo' \
+    --exclude='tests' \
+    --exclude='playwright.config.js' \
+    --exclude='run-tests.sh' \
+    --exclude='package*.json' \
+    --exclude='lighthouserc.json' \
+    --exclude='.gitignore' \
+    --exclude='screenshots' \
+    --exclude='playwright-report' \
+    --exclude='test-results' \
+    --exclude='.lighthouseci' \
+    index.html impressum.html datenschutz.html css/ assets/ manifest.json robots.txt sitemap.xml deploy/
+  cd deploy
+  zip -r ../einwich-lottes-deploy.zip .
+  cd ..
+  unzip -l einwich-lottes-deploy.zip
+  echo "✅ Deployment ZIP: einwich-lottes-deploy.zip"
+}
+
 show_usage() {
   cat <<EOF
 Usage: $0 [COMMAND]
@@ -60,12 +99,17 @@ Usage: $0 [COMMAND]
 Commands:
   a11y        Run accessibility audit only (Playwright + axe-core)
   lighthouse  Run performance audit only (Lighthouse CI)
-  all         Run both audits (default)
+  screenshots Take screenshots at mobile/desktop resolutions
+  deploy      Create deployment ZIP (excludes dev files)
+  all         Run all tests (default)
 
 Examples:
-  $0              # Run both audits
+  $0              # Run both a11y + lighthouse
   $0 a11y         # Accessibility only
   $0 lighthouse   # Performance only
+  $0 screenshots  # Visual regression screenshots
+  $0 deploy       # Create deployment ZIP
+  $0 all          # Run a11y + lighthouse + screenshots + deploy
 
 Requirements:
   - Node.js >= 18
@@ -86,10 +130,19 @@ main() {
       start_server
       run_lighthouse
       ;;
+    screenshots|screenshot|visual)
+      start_server
+      run_screenshots
+      ;;
+    deploy|zip|package)
+      run_deploy
+      ;;
     all|both)
       start_server
       run_a11y
       run_lighthouse
+      run_screenshots
+      run_deploy
       ;;
     -h|--help|help)
       show_usage

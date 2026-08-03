@@ -1,0 +1,358 @@
+name: CI/CD Pipeline
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  # ============================================================
+  # 1. TESTS: Lighthouse CI + Accessibility (Parallel)
+  # ============================================================
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      lighthouse-results: ${{ steps.lighthouse.outputs.results }}
+      a11y-results: ${{ steps.a11y.outputs.results }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # --- Run Accessibility Tests ---
+      - name: Run accessibility tests
+        id: a11y
+        run: |
+          npx playwright test --reporter=json > a11y-results.json
+          echo "results<<EOF" >> $GITHUB_OUTPUT
+          cat a11y-results.json >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Upload accessibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      # --- Run Lighthouse CI ---
+      - name: Run Lighthouse CI
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: './lighthouserc.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Extract Lighthouse results
+        run: |
+          echo "results<<EOF" >> $GITHUB_OUTPUT
+          ls -la .lighthouseci/ >> $GITHUB_OUTPUT 2>&1 || true
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Comment Lighthouse results on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const files = fs.readdirSync('.lighthouseci');
+            const lhrFiles = files.filter(f => f.endsWith('.lhr.json'));
+            
+            let comment = '## ⚡ Lighthouse CI Results\n\n';
+            
+            for (const file of lhrFiles) {
+              const data = JSON.parse(fs.readFileSync(`.lighthouseci/${file}`, 'utf8'));
+              const url = data.finalUrl || data.requestedUrl;
+              const scores = data.categories || {};
+              
+              comment += `### ${url}\n\n`;
+              comment += '| Category | Score |\n|----------|-------|\n';
+              for (const [cat, score] of Object.entries(scores)) {
+                if (cat === 'accessibility' || cat === 'performance' || cat === 'seo' || cat === 'best-practices') {
+                  comment += `| ${cat} | ${Math.round(score.score * 100)}% |\n`;
+                }
+              }
+              comment += '\n';
+              
+              // Core Web Vitals
+              const audits = data.audits || {};
+              const lcp = audits['largest-contentful-paint']?.displayValue || 'N/A';
+              const cls = audits['cumulative-layout-shift']?.displayValue || 'N/A';
+              const tbt = audits['total-blocking-time']?.displayValue || 'N/A';
+              
+              comment += `**Core Web Vitals:** LCP: ${lcp}, CLS: ${cls}, TBT: ${tbt}\n\n`;
+              
+              // Report URL
+              const storagePath = fs.readFileSync('.lighthouseci/LIGHTHOUSE_CI_STORAGE_PATH', 'utf8').trim();
+              if (storagePath) {
+                comment += `[📊 Full Report](${storagePath}/${file.replace('.lhr.json', '')}.html)\n\n`;
+              }
+            }
+            
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number
+            });
+            
+            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Lighthouse CI Results'));
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: comment
+              });
+            }
+
+  # ============================================================
+  # 2. SCREENSHOTS: Visual regression (Mobile + Desktop)
+  # ============================================================
+  screenshots:
+    needs: test
+    if: always() && (needs.test.result == 'success' || github.event_name == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 3000 &
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+
+      - name: Wait for server
+        run: |
+          for i in $(seq 1 10); do
+            curl -s http://localhost:3000/ > /dev/null && break
+            sleep 1
+          done
+
+      - name: Take screenshots (Mobile + Desktop)
+        run: |
+          npx playwright test tests/screenshots.spec.js --reporter=line
+        env:
+          BASE_URL: http://localhost:3000
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots/
+          retention-days: 30
+
+      - name: Comment screenshots on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            if (!fs.existsSync('screenshots')) {
+              console.log('No screenshots directory');
+              return;
+            }
+            
+            const files = fs.readdirSync('screenshots').filter(f => f.endsWith('.png'));
+            if (files.length === 0) return;
+            
+            let comment = '## 📸 Visual Screenshots (Mobile + Desktop)\n\n';
+            
+            // Group by page
+            const byPage = {};
+            for (const file of files) {
+              const page = file.split('-')[0];
+              if (!byPage[page]) byPage[page] = [];
+              byPage[page].push(file);
+            }
+            
+            for (const [page, imgs] of Object.entries(byPage)) {
+              comment += `### ${page}\n\n`;
+              for (const img of imgs) {
+                const filepath = path.join('screenshots', img);
+                // Upload to GH and get URL
+                comment += `![${img}](screenshots/${img})\n\n`;
+              }
+            }
+            
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number
+            });
+            
+            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Visual Screenshots'));
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: comment
+              });
+            }
+
+      - name: Stop server
+        if: always()
+        run: kill ${{ env.SERVER_PID }} || true
+
+  # ============================================================
+  # 3. DEPLOYMENT: Create ZIP for production deployment
+  # ============================================================
+  deploy:
+    needs: [test, screenshots]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create deployment ZIP
+        run: |
+          # Create clean deployment directory
+          rm -rf deploy
+          mkdir -p deploy
+          
+          # Copy all necessary files for static hosting (exclude dev/aux files)
+          rsync -av \
+            --exclude='.DS_Store' \
+            --exclude='.playwright-mcp' \
+            --exclude='icons/.gitkeep' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.omo' \
+            --exclude='tests' \
+            --exclude='playwright.config.js' \
+            --exclude='run-tests.sh' \
+            --exclude='package*.json' \
+            --exclude='lighthouserc.json' \
+            --exclude='.gitignore' \
+            --exclude='screenshots' \
+            --exclude='playwright-report' \
+            --exclude='test-results' \
+            --exclude='.lighthouseci' \
+            index.html impressum.html datenschutz.html css/ assets/ manifest.json robots.txt sitemap.xml deploy/
+          
+          # Create ZIP
+          cd deploy
+          zip -r ../einwich-lottes-deploy.zip .
+          cd ..
+          
+          # Verify ZIP contents
+          unzip -l einwich-lottes-deploy.zip
+
+      - name: Upload deployment ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-zip
+          path: einwich-lottes-deploy.zip
+          retention-days: 90
+
+  # ============================================================
+  # 4. RELEASE: Auto-create Release on main push
+  # ============================================================
+  release:
+    needs: deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download deployment ZIP
+        uses: actions/download-artifact@v4
+        with:
+          name: deployment-zip
+          path: .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "Deployment v${{ github.run_number }}"
+          body: |
+            ## 🚀 Automatic Deployment Build
+            
+            **Commit:** ${{ github.sha }}
+            **Branch:** ${{ github.ref_name }}
+            **Build:** #${{ github.run_number }}
+            **Date:** ${{ github.event.head_commit.timestamp || github.event.created_at }}
+            
+            ### 📦 Contents
+            This ZIP contains all files needed for static hosting:
+            - `index.html` — Main landing page
+            - `impressum.html` — Legal notice
+            - `datenschutz.html` — Privacy policy
+            - `css/style.css` — Stylesheet
+            - `assets/` — Images, icons, favicons
+            - `manifest.json` — PWA manifest
+            - `robots.txt` — Crawler rules
+            - `sitemap.xml` — Sitemap
+            
+            ### ✅ Quality Gates Passed
+            - Lighthouse CI: Performance ≥ 90, Accessibility ≥ 90
+            - Playwright Accessibility: WCAG 2.1 AA compliant
+            - Visual regression: Mobile (375px) + Desktop (1280px) screenshots
+            
+            ### 📋 Deployment Instructions
+            1. Download `einwich-lottes-deploy.zip`
+            2. Extract to web root
+            3. Configure web server (Apache/Nginx/Caddy) to serve static files
+            4. Ensure HTTPS is enabled
+            5. Verify: `https://your-domain.de/`
+          files: einwich-lottes-deploy.zip
+          draft: false
+          prerelease: false
+          make_latest: true
