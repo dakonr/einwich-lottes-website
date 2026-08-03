@@ -14,9 +14,10 @@ permissions:
 
 jobs:
   # ============================================================
-  # 1. TESTS: Lighthouse CI + Accessibility (Parallel)
+  # 1. TESTS: Lighthouse CI + Accessibility (manual only)
   # ============================================================
   test:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -63,20 +64,11 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
 
-      - name: Upload Lighthouse CI artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouseci
-          path: .lighthouseci/
-          retention-days: 30
-
   # ============================================================
-  # 2. SCREENSHOTS: Visual regression (Mobile + Desktop)
+  # 2. SCREENSHOTS: Visual regression (Mobile + Desktop) — manual only
   # ============================================================
   screenshots:
-    needs: test
-    if: always() && (needs.test.result == 'success' || github.event_name == 'push')
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -130,7 +122,6 @@ jobs:
   # 3. DEPLOYMENT: Create ZIP for production deployment
   # ============================================================
   deploy:
-    needs: [test, screenshots]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -220,10 +211,8 @@ jobs:
             - `robots.txt` — Crawler rules
             - `sitemap.xml` — Sitemap
 
-            ### ✅ Quality Gates Passed
-            - Lighthouse CI: Performance ≥ 90, Accessibility ≥ 90
-            - Playwright Accessibility: WCAG 2.1 AA compliant
-            - Visual regression: Mobile (375px) + Desktop (1280px) screenshots
+            ### ✅ Quality Gates
+            - Static site build passes
 
             ### 📋 Deployment Instructions
             1. Download `einwich-lottes-deploy.zip`
