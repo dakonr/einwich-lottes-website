@@ -67,7 +67,8 @@ run_deploy() {
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   rm -rf deploy
   mkdir -p deploy
-  rsync -av \
+  # Use --relative to preserve directory structure (css/, assets/)
+  rsync -av --relative \
     --exclude='.DS_Store' \
     --exclude='.playwright-mcp' \
     --exclude='icons/.gitkeep' \
