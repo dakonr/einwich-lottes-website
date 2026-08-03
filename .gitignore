@@ -31,6 +31,7 @@ test-results/
 a11y-results.json
 a11y-report.json
 *.lighthouseci/
+screenshots
 
 # Coverage
 coverage/
@@ -39,6 +40,8 @@ coverage/
 dist/
 build/
 .cache/
+deploy
+einwich-lottes-deploy.zip
 
 # Open Code and oh-my-openagent ignores
 .playright-mcp

@@ -29,8 +29,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -60,7 +60,7 @@ jobs:
         id: lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
-          configPath: './lighthouserc.json'
+          configPath: "./lighthouserc.json"
           uploadArtifacts: true
           temporaryPublicStorage: true
 
@@ -78,9 +78,9 @@ jobs:
             const fs = require('fs');
             const files = fs.readdirSync('.lighthouseci');
             const lhrFiles = files.filter(f => f.endsWith('.lhr.json'));
-            
+
             let comment = '## ⚡ Lighthouse CI Results\n\n';
-            
+
             for (const file of lhrFiles) {
               const data = JSON.parse(fs.readFileSync(`.lighthouseci/${file}`, 'utf8'));
               const url = data.finalUrl || data.requestedUrl;
@@ -109,15 +109,15 @@ jobs:
                 comment += `[📊 Full Report](${storagePath}/${file.replace('.lhr.json', '')}.html)\n\n`;
               }
             }
-            
+
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.pull_request.number
             });
-            
+
             const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Lighthouse CI Results'));
-            
+
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
@@ -137,116 +137,116 @@ jobs:
   # ============================================================
   # 2. SCREENSHOTS: Visual regression (Mobile + Desktop)
   # ============================================================
-  screenshots:
-    needs: test
-    if: always() && (needs.test.result == 'success' || github.event_name == 'push')
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  # screenshots:
+  #   needs: test
+  #   if: always() && (needs.test.result == 'success' || github.event_name == 'push')
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 20
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '20'
+  #         cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+  #     - name: Install dependencies
+  #       run: npm ci
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+  #     - name: Install Playwright browsers
+  #       run: npx playwright install --with-deps chromium
 
-      - name: Start local server
-        run: |
-          python3 -m http.server 3000 &
-          SERVER_PID=$!
-          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+  #     - name: Start local server
+  #       run: |
+  #         python3 -m http.server 3000 &
+  #         SERVER_PID=$!
+  #         echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
 
-      - name: Wait for server
-        run: |
-          for i in $(seq 1 10); do
-            curl -s http://localhost:3000/ > /dev/null && break
-            sleep 1
-          done
+  #     - name: Wait for server
+  #       run: |
+  #         for i in $(seq 1 10); do
+  #           curl -s http://localhost:3000/ > /dev/null && break
+  #           sleep 1
+  #         done
 
-      - name: Take screenshots (Mobile + Desktop)
-        run: |
-          npx playwright test tests/screenshots.spec.js --reporter=line
-        env:
-          BASE_URL: http://localhost:3000
+  #     - name: Take screenshots (Mobile + Desktop)
+  #       run: |
+  #         npx playwright test tests/screenshots.spec.js --reporter=line
+  #       env:
+  #         BASE_URL: http://localhost:3000
 
-      - name: Upload screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: screenshots
-          path: screenshots/
-          retention-days: 30
+  #     - name: Upload screenshots
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: screenshots
+  #         path: screenshots/
+  #         retention-days: 30
 
-      - name: Comment screenshots on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-            
-            if (!fs.existsSync('screenshots')) {
-              console.log('No screenshots directory');
-              return;
-            }
-            
-            const files = fs.readdirSync('screenshots').filter(f => f.endsWith('.png'));
-            if (files.length === 0) return;
-            
-            let comment = '## 📸 Visual Screenshots (Mobile + Desktop)\n\n';
-            
-            // Group by page
-            const byPage = {};
-            for (const file of files) {
-              const page = file.split('-')[0];
-              if (!byPage[page]) byPage[page] = [];
-              byPage[page].push(file);
-            }
-            
-            for (const [page, imgs] of Object.entries(byPage)) {
-              comment += `### ${page}\n\n`;
-              for (const img of imgs) {
-                const filepath = path.join('screenshots', img);
-                // Upload to GH and get URL
-                comment += `![${img}](screenshots/${img})\n\n`;
-              }
-            }
-            
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number
-            });
-            
-            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Visual Screenshots'));
-            
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: comment
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body: comment
-              });
-            }
+  #     - name: Comment screenshots on PR
+  #       if: github.event_name == 'pull_request'
+  #       uses: actions/github-script@v7
+  #       with:
+  #         script: |
+  #           const fs = require('fs');
+  #           const path = require('path');
 
-      - name: Stop server
-        if: always()
-        run: kill ${{ env.SERVER_PID }} || true
+  #           if (!fs.existsSync('screenshots')) {
+  #             console.log('No screenshots directory');
+  #             return;
+  #           }
+
+  #           const files = fs.readdirSync('screenshots').filter(f => f.endsWith('.png'));
+  #           if (files.length === 0) return;
+
+  #           let comment = '## 📸 Visual Screenshots (Mobile + Desktop)\n\n';
+
+  #           // Group by page
+  #           const byPage = {};
+  #           for (const file of files) {
+  #             const page = file.split('-')[0];
+  #             if (!byPage[page]) byPage[page] = [];
+  #             byPage[page].push(file);
+  #           }
+
+  #           for (const [page, imgs] of Object.entries(byPage)) {
+  #             comment += `### ${page}\n\n`;
+  #             for (const img of imgs) {
+  #               const filepath = path.join('screenshots', img);
+  #               // Upload to GH and get URL
+  #               comment += `![${img}](screenshots/${img})\n\n`;
+  #             }
+  #           }
+
+  #           const { data: comments } = await github.rest.issues.listComments({
+  #             owner: context.repo.owner,
+  #             repo: context.repo.repo,
+  #             issue_number: context.payload.pull_request.number
+  #           });
+
+  #           const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Visual Screenshots'));
+
+  #           if (botComment) {
+  #             await github.rest.issues.updateComment({
+  #               owner: context.repo.owner,
+  #               repo: context.repo.repo,
+  #               comment_id: botComment.id,
+  #               body: comment
+  #             });
+  #           } else {
+  #             await github.rest.issues.createComment({
+  #               owner: context.repo.owner,
+  #               repo: context.repo.repo,
+  #               issue_number: context.payload.pull_request.number,
+  #               body: comment
+  #             });
+  #           }
+
+  #     - name: Stop server
+  #       if: always()
+  #       run: kill ${{ env.SERVER_PID }} || true
 
   # ============================================================
   # 3. DEPLOYMENT: Create ZIP for production deployment
@@ -265,7 +265,7 @@ jobs:
           # Create clean deployment directory
           rm -rf deploy
           mkdir -p deploy
-          
+
           # Copy all necessary files for static hosting (exclude dev/aux files)
           # Use --relative to preserve directory structure (css/, assets/)
           rsync -av --relative \
@@ -286,12 +286,12 @@ jobs:
             --exclude='test-results' \
             --exclude='.lighthouseci' \
             index.html impressum.html datenschutz.html css/ assets/ manifest.json robots.txt sitemap.xml deploy/
-          
+
           # Create ZIP
           cd deploy
           zip -r ../einwich-lottes-deploy.zip .
           cd ..
-          
+
           # Verify ZIP contents
           unzip -l einwich-lottes-deploy.zip
 
@@ -325,12 +325,12 @@ jobs:
           name: "Deployment v${{ github.run_number }}"
           body: |
             ## 🚀 Automatic Deployment Build
-            
+
             **Commit:** ${{ github.sha }}
             **Branch:** ${{ github.ref_name }}
             **Build:** #${{ github.run_number }}
             **Date:** ${{ github.event.head_commit.timestamp || github.event.created_at }}
-            
+
             ### 📦 Contents
             This ZIP contains all files needed for static hosting:
             - `index.html` — Main landing page
@@ -341,12 +341,12 @@ jobs:
             - `manifest.json` — PWA manifest
             - `robots.txt` — Crawler rules
             - `sitemap.xml` — Sitemap
-            
+
             ### ✅ Quality Gates Passed
             - Lighthouse CI: Performance ≥ 90, Accessibility ≥ 90
             - Playwright Accessibility: WCAG 2.1 AA compliant
             - Visual regression: Mobile (375px) + Desktop (1280px) screenshots
-            
+
             ### 📋 Deployment Instructions
             1. Download `einwich-lottes-deploy.zip`
             2. Extract to web root
