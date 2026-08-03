@@ -1,0 +1,21 @@
+{
+  "name": "einwich-lottes-website",
+  "version": "1.0.0",
+  "description": "Static one-pager for Einwich & Lottes GmbH - HVAC/Sanitär/Solar/Wartung",
+  "private": true,
+  "scripts": {
+    "test:a11y": "playwright test",
+    "test:a11y:ci": "playwright test --reporter=line",
+    "test:lighthouse": "lhci autorun",
+    "test:lighthouse:ci": "lhci autorun --fail-on-budget",
+    "serve": "python3 -m http.server 3000"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@lhci/cli": "^0.15.0",
+    "@playwright/test": "^1.62.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

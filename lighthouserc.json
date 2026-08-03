@@ -1,0 +1,41 @@
+{
+  "ci": {
+    "collect": {
+      "staticDistDir": "./",
+      "numberOfRuns": 3,
+      "url": [
+        "http://localhost/index.html",
+        "http://localhost/impressum.html",
+        "http://localhost/datenschutz.html"
+      ],
+      "settings": {
+        "throttlingMethod": "simulate",
+        "preset": "desktop"
+      }
+    },
+    "assert": {
+      "preset": "lighthouse:no-pwa",
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.9 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
+        "resource-summary:document:size": ["error", { "maxNumericValue": 15000 }],
+        "resource-summary:stylesheet:size": ["warn", { "maxNumericValue": 50000 }],
+        "resource-summary:image:size": ["warn", { "maxNumericValue": 500000 }],
+        "resource-summary:total:size": ["warn", { "maxNumericValue": 600000 }],
+        "network-dependency-tree-insight": "off",
+        "uses-passive-event-listeners": "off",
+        "uses-responsive-images": ["warn", { "maxLength": 1 }],
+        "render-blocking-insight": "off",
+        "is-crawlable": "off",
+        "link-in-text-block": "off"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
