@@ -19,9 +19,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    outputs:
-      lighthouse-results: ${{ steps.lighthouse.outputs.results }}
-      a11y-results: ${{ steps.a11y.outputs.results }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,14 +37,7 @@ jobs:
 
       # --- Run Accessibility Tests ---
       - name: Run accessibility tests
-        id: a11y
-        run: |
-          npx playwright test tests/accessibility.spec.js
-          # Use a unique delimiter for the output
-          delimiter="results_$(date +%s)_$(dd if=/dev/urandom bs=4 count=1 status=none | base64)"
-          echo "$delimiter" >> $GITHUB_OUTPUT
-          cat a11y-results.json >> $GITHUB_OUTPUT
-          echo "$delimiter" >> $GITHUB_OUTPUT
+        run: npx playwright test tests/accessibility.spec.js
 
       - name: Upload accessibility report
         if: always()
@@ -57,86 +47,29 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
+      - name: Upload a11y results JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-results
+          path: a11y-results.json
+          retention-days: 30
+
       # --- Run Lighthouse CI ---
       - name: Run Lighthouse CI
-        id: lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
           configPath: "./lighthouserc.json"
           uploadArtifacts: true
           temporaryPublicStorage: true
 
-      - name: Extract Lighthouse results
-        run: |
-          # Extract Lighthouse results using standard output format
-          delimiter="lighthouse_results_$(date +%s)_$(dd if=/dev/urandom bs=4 count=1 status=none | base64)"
-          echo "$delimiter" >> $GITHUB_OUTPUT
-          ls -la .lighthouseci/ >> $GITHUB_OUTPUT 2>&1 || true
-          echo "$delimiter" >> $GITHUB_OUTPUT
-
-      - name: Comment Lighthouse results on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+      - name: Upload Lighthouse CI artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          script: |
-            const fs = require('fs');
-            const files = fs.readdirSync('.lighthouseci');
-            const lhrFiles = files.filter(f => f.endsWith('.lhr.json'));
-
-            let comment = '## ⚡ Lighthouse CI Results\n\n';
-
-            for (const file of lhrFiles) {
-              const data = JSON.parse(fs.readFileSync(`.lighthouseci/${file}`, 'utf8'));
-              const url = data.finalUrl || data.requestedUrl;
-              const scores = data.categories || {};
-              
-              comment += `### ${url}\n\n`;
-              comment += '| Category | Score |\n|----------|-------|\n';
-              for (const [cat, score] of Object.entries(scores)) {
-                if (cat === 'accessibility' || cat === 'performance' || cat === 'seo' || cat === 'best-practices') {
-                  comment += `| ${cat} | ${Math.round(score.score * 100)}% |\n`;
-                }
-              }
-              comment += '\n';
-              
-              // Core Web Vitals
-              const audits = data.audits || {};
-              const lcp = audits['largest-contentful-paint']?.displayValue || 'N/A';
-              const cls = audits['cumulative-layout-shift']?.displayValue || 'N/A';
-              const tbt = audits['total-blocking-time']?.displayValue || 'N/A';
-              
-              comment += `**Core Web Vitals:** LCP: ${lcp}, CLS: ${cls}, TBT: ${tbt}\n\n`;
-              
-              // Report URL
-              const storagePath = fs.readFileSync('.lighthouseci/LIGHTHOUSE_CI_STORAGE_PATH', 'utf8').trim();
-              if (storagePath) {
-                comment += `[📊 Full Report](${storagePath}/${file.replace('.lhr.json', '')}.html)\n\n`;
-              }
-            }
-
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number
-            });
-
-            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Lighthouse CI Results'));
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: comment
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body: comment
-              });
-            }
+          name: lighthouseci
+          path: .lighthouseci/
+          retention-days: 30
 
   # ============================================================
   # 2. SCREENSHOTS: Visual regression (Mobile + Desktop)
@@ -188,65 +121,6 @@ jobs:
           name: screenshots
           path: screenshots/
           retention-days: 30
-
-      - name: Comment screenshots on PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-
-            if (!fs.existsSync('screenshots')) {
-              console.log('No screenshots directory');
-              return;
-            }
-
-            const files = fs.readdirSync('screenshots').filter(f => f.endsWith('.png'));
-            if (files.length === 0) return;
-
-            let comment = '## 📸 Visual Screenshots (Mobile + Desktop)\n\n';
-
-            // Group by page
-            const byPage = {};
-            for (const file of files) {
-              const page = file.split('-')[0];
-              if (!byPage[page]) byPage[page] = [];
-              byPage[page].push(file);
-            }
-
-            for (const [page, imgs] of Object.entries(byPage)) {
-              comment += `### ${page}\n\n`;
-              for (const img of imgs) {
-                const filepath = path.join('screenshots', img);
-                // Upload to GH and get URL
-                comment += `![${img}](screenshots/${img})\n\n`;
-              }
-            }
-
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number
-            });
-
-            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('Visual Screenshots'));
-
-            if (botComment) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: comment
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body: comment
-              });
-            }
 
       - name: Stop server
         if: always()
