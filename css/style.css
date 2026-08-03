@@ -147,13 +147,27 @@ p {
 
 a {
   color: var(--color-blue);
-  text-decoration: none;
-  transition: color 0.15s ease;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 a:hover,
 a:focus-visible {
-  text-decoration: underline;
+  text-decoration-color: var(--color-red);
+}
+
+/* Special button-like links: no underline */
+.phone-link,
+.floating-btn,
+.contact-banner a,
+.cards-grid a,
+.service-card a,
+.partner-tile,
+.review-carousel-btn,
+body>footer a {
+  text-decoration: none;
 }
 
 a:focus-visible {

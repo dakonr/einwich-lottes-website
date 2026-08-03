@@ -21,12 +21,28 @@ Desktop.ini
 *.log
 npm-debug.log*
 
-# Local build/runtime artifacts (safe defaults)
+# Dependencies
 node_modules/
+
+# Test artifacts & reports (generated locally & in CI)
+playwright-report/
+test-results/
+.lighthouseci/
+a11y-results.json
+a11y-report.json
+*.lighthouseci/
+screenshots
+
+# Coverage
+coverage/
+
+# Build outputs (not used, but safe to ignore)
 dist/
 build/
-coverage/
 .cache/
+deploy
+einwich-lottes-deploy.zip
 
 # Open Code and oh-my-openagent ignores
 .playright-mcp
+.omo/
