@@ -85,7 +85,7 @@ run_deploy() {
     --exclude='playwright-report' \
     --exclude='test-results' \
     --exclude='.lighthouseci' \
-    index.html impressum.html datenschutz.html css/ assets/ manifest.json robots.txt sitemap.xml deploy/
+    index.html impressum.html datenschutz.html css/ js/ assets/ manifest.json robots.txt sitemap.xml deploy/
   cd deploy
   zip -r ../einwich-lottes-deploy.zip .
   cd ..

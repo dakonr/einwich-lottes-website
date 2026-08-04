@@ -30,7 +30,7 @@
       <p>
         <strong>Einwich &amp; Lottes GmbH</strong><br>
         Lange Straße 34<br>
-        96117 Memmelsdorf (OT Kremmeldorf)
+        96117 Memmelsdorf (OT Kremmeldorf)<br>
         Deutschland
       </p>
     </section>
@@ -91,19 +91,7 @@
       </nav>
     </div>
   </footer>
-  <script>
-    document.querySelectorAll('[data-c]').forEach(function (el) {
-      var codes = el.getAttribute('data-c');
-      var addr = codes.split(',').map(function (c) { return String.fromCharCode(c); }).join('');
-      function decode() {
-        el.href = 'mailto:' + addr;
-        if (!el.querySelector('svg')) el.textContent = addr;
-      }
-      el.addEventListener('focus', decode);
-      el.addEventListener('mouseenter', decode);
-      el.addEventListener('touchstart', decode);
-    });
-  </script>
+  <script src="js/email.js" defer></script>
 </body>
 
 </html>
