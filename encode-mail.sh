@@ -8,6 +8,6 @@ echo "Für data-c:"
 echo "$encoded"
 echo
 echo "HTML-Beispiel:"
-echo "<a data-c=\"$encoded\">E-Mail anzeigen</a>"
+echo "<a href=\"#\" data-c=\"$encoded\">E-Mail anzeigen</a>"
 
 # This function encodes a E-Mail Address to a correct data-c part which will be decoded from js/email.js
