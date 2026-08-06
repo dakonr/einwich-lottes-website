@@ -1,6 +1,9 @@
 document.querySelectorAll('[data-c]').forEach(function (el) {
-  var codes = el.getAttribute('data-c');
-  var addr = codes.split(',').map(function (c) { return String.fromCharCode(c); }).join('');
+  var raw = el.getAttribute('data-c');
+  var at = raw.indexOf('@');
+  var addr = at > -1
+    ? raw.slice(0, at).split(',').map(function (c) { return String.fromCharCode(c); }).join('') + raw.slice(at)
+    : raw;
   function decode() {
     el.href = 'mailto:' + addr;
     if (!el.querySelector('svg')) el.textContent = addr;
