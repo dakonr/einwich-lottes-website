@@ -9,7 +9,7 @@ index.html         # One-pager: hero, phone banner, floating contact (3 btns), 5
 impressum.html     # Legal notice (§5 DDG) — noindex
 datenschutz.html   # GDPR privacy policy — noindex
 css/style.css      # Single stylesheet, design tokens in :root, mobile-first
-js/email.js        # Email obfuscation (data-c attribute decoder)
+js/email.js        # Email obfuscation (data-c attribute decoder: encoded user part + plain domain)
 assets/images/     # hero_banner (.avif/.webp/.jpg) + logo (.avif/.png) — pre-optimized variants
 assets/icons/      # favicons + touch icons (png, ico) — inlined SVG in HTML for site icons
 manifest.json      # PWA manifest (name, theme_color #3356A1, logo.png icon)
@@ -30,12 +30,17 @@ deploy/            # Deployment staging directory (gitignored, rebuilt by CI)
 | `./run-tests.sh` | Runs a11y + lighthouse + screenshots + deploy locally |
 | `./run-tests.sh a11y` | Accessibility audit only |
 | `./run-tests.sh deploy` | Create deployment ZIP (excludes dev files) |
+| `npx playwright test` | Run ALL Playwright tests (a11y + email-obfuscation + legal + screenshots; 37 tests) |
+| `npx playwright test tests/email-obfuscation.spec.js` | Email obfuscation tests only |
+| `npx playwright test tests/legal.spec.js` | Legal tests only (Impressum content + legal links) |
 
 ## TESTING
 - **Playwright** (`playwright.config.js`) — runs against `localhost:3000`, starts its own dev server
 - **axe-core** (`tests/accessibility.spec.js`) — checks all 3 pages for WCAG 2.1 AA violations
 - **Lighthouse CI** (`lighthouserc.json`) — budgets: perf ≥90, a11y ≥90, best-practices ≥90, LCP ≤2500ms, CLS ≤0.1
 - **Screenshots** (`tests/screenshots.spec.js`) — visual regression at mobile + desktop
+- **Email obfuscation** (`tests/email-obfuscation.spec.js`) — verifies `data-c` format (encoded user part, plain domain) on all 3 pages + decodes to `mailto:` on hover/focus/click (7 tests)
+- **Legal** (`tests/legal.spec.js`) — verifies all manually-checked Impressum facts (§5 DDG: company, address, tel/email, Geschäftsführer, HRB, USt-IdNr, Kammer, Berufsbezeichnung, Streitbeilegung) + checks every page links to Impressum & Datenschutz in `nav[aria-label="Rechtliche Links"]` (12 tests)
 - CI runs tests manually via `workflow_dispatch` (not on every PR)
 
 ## DEPLOYMENT
@@ -65,7 +70,7 @@ deploy/            # Deployment staging directory (gitignored, rebuilt by CI)
 - Images: ship `.avif` + `.webp` + fallback via `<picture>`/`<source>`; keep all three variants in sync. Logo currently only has `.avif` + `.png`.
 - Content max-width: 960px (`.container`).
 - External links open in a new tab with `rel="noopener noreferrer"` (e.g. Instagram button, hosting provider link in datenschutz).
-- Email obfuscation: `data-c` attribute with comma-separated char codes, decoded by `js/email.js` on interaction.
+- Email obfuscation: `data-c` attribute holds the **user part as comma-separated char codes** followed by **`@` + plain-text domain** (e.g. `105,110,102,111@einwich-lottes.de`), decoded by `js/email.js` on interaction (focus/mouseenter/touchstart/click). Helper: `encode-mail.sh` encodes only the user part. Cover format + decoding in `tests/email-obfuscation.spec.js`.
 
 ## IMPLEMENTATION NOTES (divergences from REQUIREMENTS.md)
 - **Primary Blue**: CSS uses `--color-blue: #2655A4` (logo-sampled) vs REQUIREMENTS `#0055A5`
